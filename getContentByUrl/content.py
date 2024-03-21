@@ -7,24 +7,25 @@ import os
 
 import getUrl
 
-print("================================",len(getUrl.article_links) )
-# 获取列表页 HTML 内容\
-    
+print("================================", len(getUrl.article_links))
+# 获取列表页 HTML 内容
 links = getUrl.article_links
-    
+
+
 def get_list_page(url):
     try:
-      response = requests.get(url, timeout=30)
-      return response.text
+        response = requests.get(url, timeout=30)
+        return response.text
     except requests.Timeout:
-            print(f"请求超时: {url}")
-            return None
+        print(f"请求超时: {url}")
+        return None
     except requests.RequestException as e:
-            print(f"请求发生错误: {url}, {e}")
-            return None
+        print(f"请求发生错误: {url}, {e}")
+        return None
     except Exception as e:
-            print(f"其他异常: {url}, {e}")
-            return None
+        print(f"其他异常: {url}, {e}")
+        return None
+
 
 def parseContentToExcel(htmlContent):
     # 使用BeautifulSoup解析HTML
@@ -42,40 +43,35 @@ def parseContentToExcel(htmlContent):
     # 输出标题和正文内容
     print("标题:", title)
     print("\n正文内容:", article_body)
-        # 获取当前文件的绝对路径
+    # 获取当前文件的绝对路径
     current_file_path = os.path.abspath(__file__)
 
     # 获取当前文件所在的文件夹路径
     current_folder = os.path.dirname(current_file_path)
-    
+
     filename = 'content.xlsx'
-    
-    absolute_path = os.path.join(current_folder ,filename)
-    
-    
-    
+
+    absolute_path = os.path.join(current_folder, filename)
+
     # 创建DataFrame
     data = pd.DataFrame({'文章标题（不能重复）': [title], '文章内容': [article_body]})
 #     data.dropna(axis=0, inplace=True)
 
-    
     if not os.path.exists(absolute_path):
-            data.to_excel(absolute_path, index=False, sheet_name='alizhizhuchi')
+        data.to_excel(absolute_path, index=False, sheet_name='alizhizhuchi')
     else:
 
-      with pd.ExcelFile(absolute_path) as xls:
-         if 'alizhizhuchi' in xls.sheet_names:
-              with pd.ExcelWriter(absolute_path, engine='openpyxl', mode='a',if_sheet_exists='overlay') as writer:
-                    data.to_excel(writer, index=False, sheet_name='alizhizhuchi', startrow=writer.sheets['alizhizhuchi'].max_row, header=False)
+        with pd.ExcelFile(absolute_path) as xls:
+            if 'alizhizhuchi' in xls.sheet_names:
+                with pd.ExcelWriter(absolute_path, engine='openpyxl', mode='a', if_sheet_exists='overlay') as writer:
+                    data.to_excel(writer, index=False, sheet_name='alizhizhuchi',
+                                  startrow=writer.sheets['alizhizhuchi'].max_row, header=False)
 
 
 for link in links:
     print(link)
     htmlContent = get_list_page(link)
     if htmlContent is not None:
-      parseContentToExcel(htmlContent)
-    else: 
-      continue
-
-
-
+        parseContentToExcel(htmlContent)
+    else:
+        continue
