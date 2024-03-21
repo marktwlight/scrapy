@@ -5,12 +5,12 @@ import pandas as pd
 import openpyxl
 import os
 
-import getHtml
+import getUrl
 
-print("================================",len(getHtml.article_links) )
+print("================================",len(getUrl.article_links) )
 # 获取列表页 HTML 内容\
     
-links = getHtml.article_links
+links = getUrl.article_links
     
 def get_list_page(url):
     try:
