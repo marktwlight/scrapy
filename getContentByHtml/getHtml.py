@@ -34,10 +34,8 @@ def parse_new_link(html_content):
 #  https://oglobo.globo.com/brasil/index/feed/pagina-4.ghtml
 # santa-catarina
 # https://g1.globo.com/sc/santa-catarina/index/feed/pagina-7.ghtml
-for i in range(1, 50):
-    url = 'https://oglobo.globo.com/brasil/index/feed/pagina-' + \
-        str(i) + '.ghtml'
-#     url = 'https://falkor-cda.bastian.globo.com/tenants/g1/instances/66162329-e22a-4ff4-8091-0f4c7c933510/posts/page/'+ str(i)
+for i in range(1, 10):
+    url = 'https://oglobo.globo.com/brasil/index/feed/pagina-' + str(i) + '.ghtml'
     print(url)
     htmlStr = get_list_page(url)
     if htmlStr is not None:
