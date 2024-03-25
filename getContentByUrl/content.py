@@ -8,7 +8,8 @@ import os
 import getUrl
 from datetime import datetime
 
-
+import spinner
+import similiarRate
 print("================================", len(getUrl.article_links))
 # 获取列表页 HTML 内容
 links = getUrl.article_links
@@ -44,6 +45,9 @@ def parseContentToExcel(htmlContent):
     soup = BeautifulSoup(htmlContent, "html.parser")
     # 提取标题
     title = soup.find("h1", class_="content-head__title").text.strip()
+    
+    new_title = spinner.transform_text(title)
+
 
     article_body = ""
     # 提取正文内容
@@ -53,11 +57,12 @@ def parseContentToExcel(htmlContent):
         text = paragraph.text.strip()
         article_body += text
 
-    # 如何进行伪原创
+    # 调用伪原创方法
 
+    new_article_body = spinner.transform_text(article_body)
     # 输出标题和正文内容
-    print("标题:", title)
-    print("\n正文内容:", article_body)
+    print("标题:", new_title)
+    print("\n正文内容:", new_article_body)
     # 获取当前文件的绝对路径
     current_file_path = os.path.abspath(__file__)
 
@@ -69,7 +74,7 @@ def parseContentToExcel(htmlContent):
     absolute_path = os.path.join(current_folder, filename)
 
     # 创建DataFrame
-    data = pd.DataFrame({'文章标题（不能重复）': [title], '文章内容': [article_body]})
+    data = pd.DataFrame({'文章标题（不能重复）': [new_title], '文章内容': [new_article_body]})
 #     data.dropna(axis=0, inplace=True)
 
     if not os.path.exists(absolute_path):
