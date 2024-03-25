@@ -6,6 +6,8 @@ import openpyxl
 import os
 
 import getUrl
+from datetime import datetime
+
 
 print("================================", len(getUrl.article_links))
 # 获取列表页 HTML 内容
@@ -27,6 +29,16 @@ def get_list_page(url):
         return None
 
 
+def getDate():
+    # 获取当前日期
+    current_date = datetime.now()
+
+    # 格式化日期为 YYYY-MM-DD 样式
+    formatted_date = current_date.strftime('%Y-%m-%d')
+
+    return formatted_date
+
+
 def parseContentToExcel(htmlContent):
     # 使用BeautifulSoup解析HTML
     soup = BeautifulSoup(htmlContent, "html.parser")
@@ -40,6 +52,9 @@ def parseContentToExcel(htmlContent):
         # 忽略所有子元素，只获取纯文本内容
         text = paragraph.text.strip()
         article_body += text
+
+    # 如何进行伪原创
+
     # 输出标题和正文内容
     print("标题:", title)
     print("\n正文内容:", article_body)
@@ -49,7 +64,7 @@ def parseContentToExcel(htmlContent):
     # 获取当前文件所在的文件夹路径
     current_folder = os.path.dirname(current_file_path)
 
-    filename = 'content.xlsx'
+    filename = getDate() +" " + getUrl.news_category+'.xlsx'
 
     absolute_path = os.path.join(current_folder, filename)
 
