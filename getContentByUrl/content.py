@@ -1,15 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
-
 import pandas as pd
 import openpyxl
 import os
-
 import getUrl
 from datetime import datetime
-
 import spinner
-import similiarRate
+
 print("================================", len(getUrl.article_links))
 # 获取列表页 HTML 内容
 links = getUrl.article_links

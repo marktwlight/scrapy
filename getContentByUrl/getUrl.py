@@ -65,10 +65,10 @@ urls = {
 # 定义列表页 URL 模板和起始页码、结束页码
 # url_pattern = 'https://falkor-cda.bastian.globo.com/tenants/oglobo/instances/76021b97-8e0f-425c-87a6-a933ffe47320/posts/page/{}'
 start_page = 1
-end_page = 2  # 设置结束页码
-news_category = 'Mais'
+end_page = 5  # 设置结束页码
+news_category = 'Esporte'
 # 获取文章链接列表
-article_links = get_article_links(urls[news_category], start_page, end_page)
+article_links = get_article_links(urls[news_category], start_page, end_page) 
 
 # 打印文章链接数量
 print(len(article_links), "article links")
