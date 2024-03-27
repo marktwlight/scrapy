@@ -6,7 +6,7 @@ import os
 import getUrl
 from datetime import datetime
 import spinner
-
+import similiarRate
 print("================================", len(getUrl.article_links))
 # 获取列表页 HTML 内容
 links = getUrl.article_links
@@ -44,8 +44,9 @@ def parseContentToExcel(htmlContent):
     title = soup.find("h1", class_="content-head__title").text.strip()
     
     new_title = spinner.transform_text(title)
-
-
+    # 标题相似度
+    # title_rate = similiarRate.getSimilarity(title,new_title)
+    #判断相似值，
     article_body = ""
     # 提取正文内容
     paragraphs = soup.find_all("p", class_="content-text__container")
