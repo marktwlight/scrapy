@@ -5,7 +5,7 @@ from nltk.downloader import download
 import nltk
 
 import similiarRate
-
+import random
 # 下载葡萄牙语的语言包
 # download('own')
 
@@ -30,7 +30,8 @@ def preprocess_text(text):
         for word in words:
             synonyms = get_primary_synonym(word)
             if synonyms:
-                new_words.append(synonyms[0])  # 只保留第一个同义词
+                new_word = random.choice(synonyms)  # 随机近义词
+                new_words.append(new_word)
             else:
                 new_words.append(word)
         processed_sentence = ' '.join(new_words)

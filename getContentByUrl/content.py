@@ -58,6 +58,8 @@ def parseContentToExcel(htmlContent):
     # 调用伪原创方法
 
     new_article_body = spinner.transform_text(article_body)
+    
+    
     # 输出标题和正文内容
     print("标题:", new_title)
     print("\n正文内容:", new_article_body)
