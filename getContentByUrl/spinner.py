@@ -29,6 +29,7 @@ def preprocess_text(text,isLast):
         if isLast:   # 不处理标题
             if i == len(sentences) - 1:  # 如果是最后一句话，则跳过
                continue
+              
         words = word_tokenize(sentence, language='portuguese')  # 分词
         new_words = []
         for word in words:
