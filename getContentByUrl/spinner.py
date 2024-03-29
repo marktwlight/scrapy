@@ -22,14 +22,15 @@ def get_primary_synonym(word):
     return synonyms
 
 
-def preprocess_text(text,isLast):
+def preprocess_text(text, isArticle):
     sentences = sent_tokenize(text, language='portuguese')  # 分句
     processed_sentences = []
-    for i, sentence in enumerate(sentences):
-        if isLast:   # 不处理标题
-            if i == len(sentences) - 1:  # 如果是最后一句话，则跳过
-               continue
-              
+    if isArticle:
+        sentences = sentences[:-1]  # 如果是最后一句话，则移除最后一句
+        
+    for sentence in sentences:
+        if "whatsapp" in sentence.lower():
+            continue  # 如果句子中包含"whatsapp"，则跳过这句话
         words = word_tokenize(sentence, language='portuguese')  # 分词
         new_words = []
         for word in words:
@@ -47,7 +48,7 @@ def preprocess_text(text,isLast):
 # 对文本进行词汇替换和句子重组
 
 
-def transform_text(text,isLast):
-    transformed_text = preprocess_text(text,isLast)
+def transform_text(text, isArticle):
+    transformed_text = preprocess_text(text, isArticle)
     rate = similiarRate.getSimilarity(text, transformed_text)
     return transformed_text
