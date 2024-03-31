@@ -10,3 +10,6 @@ urls = {
     "FORMAÇÃO DO PAREDÃO": "https://falkor-cda.bastian.globo.com/tenants/gshow/instances/69b0f457-87c7-4459-91b6-acd356f55b09/posts/page/{}",
     "FLAMENGO": "https://falkor-cda.bastian.globo.com/tenants/ge/instances/1cd46a8a-4770-4c3d-b03a-0fba919c83c4/posts/page/{}"
 }
+
+for category, url in urls.items():
+    print(category, url)
