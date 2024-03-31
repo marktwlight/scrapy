@@ -7,9 +7,40 @@ import getUrl
 from datetime import datetime
 import spinner
 import similiarRate
-print("================================", len(getUrl.article_links))
-# 获取列表页 HTML 内容
-links = getUrl.article_links
+import schedule
+import time
+
+import requests
+import re
+# 获取文章链接列表,网络请求超时处理
+
+
+def get_article_links(url_pattern, start_page, end_page):
+    article_links = []
+    for i in range(start_page, end_page + 1):
+        url = url_pattern.format(i)
+        try:
+            response = requests.get(url, timeout=30)
+            if response.ok and 'application/json' in response.headers.get('content-type', ''):
+                data = response.json()
+                items = data.get('items', [])
+                print(items)
+                for item in items:
+                    content = item.get('content', {})
+                    url = content.get('url', '')
+                    # 只采集文本类的新闻
+                    if re.search(r'/noticia/', url):
+                        article_links.append(url)
+            else:
+                print(f"Failed to fetch data from {url}")
+        except requests.Timeout:
+            continue
+        except requests.RequestException as e:
+            continue
+        except Exception as e:
+            continue
+
+    return article_links
 
 
 def get_list_page(url):
@@ -37,16 +68,16 @@ def getDate():
     return formatted_date
 
 
-def parseContentToExcel(htmlContent):
+def parseContentToExcel(htmlContent, category):
     # 使用BeautifulSoup解析HTML
     soup = BeautifulSoup(htmlContent, "html.parser")
     # 提取标题
     title = soup.find("h1", class_="content-head__title").text.strip()
-    
-    new_title = spinner.transform_text(title,False)
+
+    new_title = spinner.transform_text(title, False)
     # 标题相似度
     # title_rate = similiarRate.getSimilarity(title,new_title)
-    #判断相似值，
+    # 判断相似值，
     article_body = ""
     # 提取正文内容
     paragraphs = soup.find_all("p", class_="content-text__container")
@@ -57,24 +88,24 @@ def parseContentToExcel(htmlContent):
 
     # 调用伪原创方法
     # git
-    new_article_body = spinner.transform_text(article_body,True)
-    
-    
+    new_article_body = spinner.transform_text(article_body, True)
+
     # 输出标题和正文内容
-    print("标题:", new_title)
-    print("\n正文内容:", new_article_body)
+    print(category, "标题:", new_title)
+    print("\n", category, "正文内容:", new_article_body)
     # 获取当前文件的绝对路径
     current_file_path = os.path.abspath(__file__)
 
     # 获取当前文件所在的文件夹路径
     current_folder = os.path.dirname(current_file_path)
 
-    filename = getDate() +" " + getUrl.news_category+'.xlsx'
+    filename = getDate() + " " + category+'.xlsx'
 
     absolute_path = os.path.join(current_folder, filename)
 
     # 创建DataFrame
-    data = pd.DataFrame({'文章标题（不能重复）': [new_title], '文章内容': [new_article_body]})
+    data = pd.DataFrame(
+        {'文章标题（不能重复）': [new_title], '文章内容': [new_article_body]})
 #     data.dropna(axis=0, inplace=True)
 
     if not os.path.exists(absolute_path):
@@ -88,10 +119,20 @@ def parseContentToExcel(htmlContent):
                                   startrow=writer.sheets['alizhizhuchi'].max_row, header=False)
 
 
-for link in links:
-    print(link)
-    htmlContent = get_list_page(link)
-    if htmlContent is not None:
-        parseContentToExcel(htmlContent)
-    else:
-        continue
+start_page = 1
+end_page = 5  # 设置结束页码
+
+
+def getHtmlContent(urls):
+    # 遍历所有的新闻种类
+    for category, url in urls.items():
+
+        # 只有五条
+        article_links = get_article_links(url, start_page, end_page)
+        for link in article_links:
+
+            htmlContent = get_list_page(link)
+            if htmlContent is not None:
+                parseContentToExcel(htmlContent, category)
+            else:
+                continue
