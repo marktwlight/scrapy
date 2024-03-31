@@ -27,7 +27,8 @@ def preprocess_text(text, isArticle):
     processed_sentences = []
     if isArticle:
         sentences = sentences[:-1]  # 如果是最后一句话，则移除最后一句
-        
+
+
     for sentence in sentences:
         if "whatsapp" in sentence.lower():
             continue  # 如果句子中包含"whatsapp"，则跳过这句话

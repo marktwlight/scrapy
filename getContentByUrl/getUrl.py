@@ -13,6 +13,7 @@ def get_article_links(url_pattern, start_page, end_page):
             if response.ok and 'application/json' in response.headers.get('content-type', ''):
                 data = response.json()
                 items = data.get('items', [])
+                print(items)
                 for item in items:
                     content = item.get('content', {})
                     url = content.get('url', '')
@@ -47,7 +48,7 @@ def get_article_links(url_pattern, start_page, end_page):
 # https://falkor-cda.bastian.globo.com/tenants/gshow/instances/1838c598-21e3-4d74-bc3d-bd7d19d87a9a/posts/page/4
 
 # Brasil 2024/3/25
-#https://falkor-cda.bastian.globo.com/tenants/oglobo/instances/76021b97-8e0f-425c-87a6-a933ffe47320/posts/page/6
+# https://falkor-cda.bastian.globo.com/tenants/oglobo/instances/76021b97-8e0f-425c-87a6-a933ffe47320/posts/page/6
 urls = {
     "ITAPETININGA E REGIÃO": "https://falkor-cda.bastian.globo.com/tenants/g1/instances/66162329-e22a-4ff4-8091-0f4c7c933510/posts/page/{}",
     "GOIÁS": "https://falkor-cda.bastian.globo.com/tenants/g1/instances/5de8a589-29a6-4e3b-add5-8cb4040717f4/posts/page/{}",
@@ -56,7 +57,8 @@ urls = {
     "SANTOS E REGIÃO": "https://falkor-cda.bastian.globo.com/tenants/g1/instances/a6244a3c-a5eb-45ae-b958-1d317208434d/posts/page/{}",
     # "CARROS": "https://falkor-cda.bastian.globo.com/tenants/g1/instances/97f461e5-0b30-4257-a2a3-501d24eb9e70/posts/page/{}",  新闻太少
     "Mais": "https://falkor-cda.bastian.globo.com/tenants/gshow/instances/1838c598-21e3-4d74-bc3d-bd7d19d87a9a/posts/page/{}",
-    "Brasil": "https://falkor-cda.bastian.globo.com/tenants/oglobo/instances/76021b97-8e0f-425c-87a6-a933ffe47320/posts/page/{}"
+    "Brasil": "https://falkor-cda.bastian.globo.com/tenants/oglobo/instances/76021b97-8e0f-425c-87a6-a933ffe47320/posts/page/{}",
+    "FORMAÇÃO DO PAREDÃO": "https://falkor-cda.bastian.globo.com/tenants/gshow/instances/69b0f457-87c7-4459-91b6-acd356f55b09/posts/page/{}"
 }
 
 # 打印字典中的键和对应的 URL
@@ -64,11 +66,11 @@ urls = {
 
 # 定义列表页 URL 模板和起始页码、结束页码
 # url_pattern = 'https://falkor-cda.bastian.globo.com/tenants/oglobo/instances/76021b97-8e0f-425c-87a6-a933ffe47320/posts/page/{}'
-start_page = 50
-end_page = 70  # 设置结束页码
+start_page = 1
+end_page = 5  # 设置结束页码
 news_category = 'Brasil'
 # 获取文章链接列表
-article_links = get_article_links(urls[news_category], start_page, end_page) 
+article_links = get_article_links(urls[news_category], start_page, end_page)
 
 # 打印文章链接数量
 print(len(article_links), "article links")

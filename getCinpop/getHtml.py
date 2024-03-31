@@ -25,18 +25,15 @@ article_links = []
 def parse_new_link(html_content):
     soup = BeautifulSoup(html_content, 'html.parser')
 
-    for link in soup.find_all('a', class_='feed-post-link'):
-        if 'videos' not in link['href']:
+    for link in soup.find_all('a', class_='td-image-wrap'):
             article_links.append(link['href'])
 
 
 # https://cinepop.com.br/category/noticias-101/page/4/
-# 环球新闻
-#  https://oglobo.globo.com/brasil/index/feed/pagina-4.ghtml
-# santa-catarina
-# https://g1.globo.com/sc/santa-catarina/index/feed/pagina-7.ghtml
-for i in range(1, 10):
-    url = 'https://oglobo.globo.com/brasil/index/feed/pagina-' + str(i) + '.ghtml'
+
+
+for i in range(1, 2):
+    url = 'https://cinepop.com.br/category/noticias-101/page/' + str(i) + '/'
     print(url)
     htmlStr = get_list_page(url)
     if htmlStr is not None:
