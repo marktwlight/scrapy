@@ -7,7 +7,6 @@ def get_article_links(url_pattern, start_page, end_page):
     article_links = []
     for i in range(start_page, end_page + 1):
         url = url_pattern.format(i)
-        print(url)
         try:
             response = requests.get(url, timeout=30)
             if response.ok and 'application/json' in response.headers.get('content-type', ''):
@@ -68,10 +67,10 @@ urls = {
 # url_pattern = 'https://falkor-cda.bastian.globo.com/tenants/oglobo/instances/76021b97-8e0f-425c-87a6-a933ffe47320/posts/page/{}'
 start_page = 1
 end_page = 5  # 设置结束页码
-news_category = 'ITAPETININGA E REGIÃO'
+news_category = 'FORMAÇÃO DO PAREDÃO'
 # 获取文章链接列表
 article_links = get_article_links(urls[news_category], start_page, end_page)
 
 # 打印文章链接数量
 print(len(article_links), "article links")
-print(article_links)
+
