@@ -9,5 +9,7 @@ urls = {
     "Brasil": "https://falkor-cda.bastian.globo.com/tenants/oglobo/instances/76021b97-8e0f-425c-87a6-a933ffe47320/posts/page/{}",
     "FORMAÇÃO DO PAREDÃO": "https://falkor-cda.bastian.globo.com/tenants/gshow/instances/69b0f457-87c7-4459-91b6-acd356f55b09/posts/page/{}",
     "FLAMENGO": "https://falkor-cda.bastian.globo.com/tenants/ge/instances/1cd46a8a-4770-4c3d-b03a-0fba919c83c4/posts/page/{}",
-    "Política": 'https://falkor-cda.bastian.globo.com/tenants/oglobo/instances/00b28996-5f09-49e7-95d3-50200a92f36e/posts/page/{}'
+    "Política": 'https://falkor-cda.bastian.globo.com/tenants/oglobo/instances/00b28996-5f09-49e7-95d3-50200a92f36e/posts/page/{}',
+    "Rio": 'https://falkor-cda.bastian.globo.com/tenants/oglobo/instances/a6ca64c5-a5ed-473b-96bf-91a14382ea68/posts/page/{}',
+    'Mundo': 'https://falkor-cda.bastian.globo.com/tenants/oglobo/instances/c780af2e-f101-48e6-82b4-c2fe60ed617c/posts/page/{}'
 }

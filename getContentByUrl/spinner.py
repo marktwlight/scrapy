@@ -1,8 +1,8 @@
 from nltk.corpus import wordnet as wn
 from nltk.tokenize import sent_tokenize, word_tokenize
 
-from nltk.downloader import download
-import nltk
+# from nltk.downloader import download
+# import nltk
 
 import similiarRate
 import random

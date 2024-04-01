@@ -1,15 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-import openpyxl
 import os
-
 from datetime import datetime
 import spinner
-import similiarRate
-import schedule
-import time
-
 import requests
 import re
 # 获取文章链接列表,网络请求超时处理
