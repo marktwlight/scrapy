@@ -37,5 +37,5 @@ def getLinks(website):
     return article_links
 
 
-links = getLinks(website)
-print(len(links))
+article_links = getLinks(website)
+print(len(article_links))
