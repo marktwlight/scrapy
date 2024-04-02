@@ -35,7 +35,7 @@ def get_article_links(url_pattern, start_page, end_page, payload, categoryNumber
             continue
         except Exception as e:
             continue
-
+    print(len(article_links))
     return article_links
 
 
@@ -64,14 +64,16 @@ def getDate():
     return formatted_date
 
 
-def parseContentToExcel(htmlContent, category, category_number):
+def parseContentToExcel(htmlContent, categoryNumber, category_number):
     # 使用BeautifulSoup解析HTML
     soup = BeautifulSoup(htmlContent, "html.parser")
     # 提取标题
-    title = soup.find(
-        "h1", class_="inner-page-section__title title-1").text.strip()
-
-    new_title = spinner.transform_text(title)
+    title = soup.find("h1", class_="inner-page-section__title title-1")
+    if title:
+        title=title.text.strip()
+        new_title = spinner.transform_text(title)
+    else:
+        print("未找到符合条件的标题标签")
     # 标题相似度
     # title_rate = similiarRate.getSimilarity(title,new_title)
     # 判断相似值，
@@ -90,8 +92,8 @@ def parseContentToExcel(htmlContent, category, category_number):
     new_article_body = spinner.transform_text(article_body)
 
     # 输出标题和正文内容
-    print(category, "标题:", new_title)
-    print("\n", category, "正文内容:", new_article_body)
+    print(category_number.get(categoryNumber), "标题:", new_title)
+    print("\n", category_number.get(categoryNumber), "正文内容:", new_article_body)
     # 获取当前文件的绝对路径
     current_file_path = os.path.abspath(__file__)
 
@@ -119,7 +121,7 @@ def parseContentToExcel(htmlContent, category, category_number):
 
 
 start_page = 1
-end_page = 5  # 设置结束页码
+end_page = 1  # 设置结束页码
 
 
 def getHtmlContent(Urls):
