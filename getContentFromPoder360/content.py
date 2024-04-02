@@ -71,7 +71,7 @@ def parseContentToExcel(htmlContent, category, category_number):
     title = soup.find(
         "h1", class_="inner-page-section__title title-1").text.strip()
 
-    new_title = spinner.transform_text(title, False)
+    new_title = spinner.transform_text(title)
     # 标题相似度
     # title_rate = similiarRate.getSimilarity(title,new_title)
     # 判断相似值，
@@ -87,7 +87,7 @@ def parseContentToExcel(htmlContent, category, category_number):
 
     # 调用伪原创方法
     # git
-    new_article_body = spinner.transform_text(article_body, True)
+    new_article_body = spinner.transform_text(article_body)
 
     # 输出标题和正文内容
     print(category, "标题:", new_title)
