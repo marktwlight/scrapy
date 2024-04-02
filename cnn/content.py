@@ -15,6 +15,5 @@ for link in article_links:
     artilce = ''
     for paragraph in paragraphs:
         artilce += paragraph.text
-    print('标题------', title)
-    print('文章------', artilce)
-    # parseContentToExcel(title, artilce)
+
+    parseContentToExcel(title, artilce)

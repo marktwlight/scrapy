@@ -1,6 +1,8 @@
 import pandas as pd
 import spinner
 from datetime import datetime
+import os
+
 
 def getDate():
     # 获取当前日期
@@ -10,37 +12,23 @@ def getDate():
     formatted_date = current_date.strftime('%Y-%m-%d')
 
     return formatted_date
-def parseContentToExcel(htmlContent, category):
-   
-    # 提取标题
-    title = soup.find("h1", class_="content-head__title").text.strip()
 
-    new_title = spinner.transform_text(title, False)
-    # 标题相似度
-    # title_rate = similiarRate.getSimilarity(title,new_title)
-    # 判断相似值，
-    article_body = ""
-    # 提取正文内容
-    paragraphs = soup.find_all("p", class_="content-text__container")
-    for paragraph in paragraphs:
-        # 忽略所有子元素，只获取纯文本内容
-        text = paragraph.text.strip()
-        article_body += text
 
-    # 调用伪原创方法
-    # git
-    new_article_body = spinner.transform_text(article_body, True)
+def parseContentToExcel(title, article):
+
+    new_title = spinner.transform_text(title)
+    new_article_body = spinner.transform_text(article)
 
     # 输出标题和正文内容
-    print(category, "标题:", new_title)
-    print("\n", category, "正文内容:", new_article_body)
+    print("标题:", new_title)
+    print("\n正文内容:", new_article_body)
     # 获取当前文件的绝对路径
     current_file_path = os.path.abspath(__file__)
 
     # 获取当前文件所在的文件夹路径
     current_folder = os.path.dirname(current_file_path)
 
-    filename = getDate() + " " + category+'.xlsx'
+    filename = getDate() + '.xlsx'
 
     absolute_path = os.path.join(current_folder, filename)
 
