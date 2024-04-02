@@ -20,15 +20,13 @@ def get_article_links(url_pattern, start_page, end_page, payload, categoryNumber
             response = requests.post(url_pattern, data=payload, timeout=30)
             if response.ok and 'text/html' in response.headers.get('content-type', ''):
                 soup = BeautifulSoup(response.content, 'html.parser')
-                print(soup)
-                links = soup.find_all('a', class_='box-queue__data')
-                # links = soup.select('a[href*="/noticia/"]')
-                for link in links:
-                    href = link['href']
-                    # 只采集文本类的新闻链接politica
-                    # if re.search(r'/noticia/', href):
-                    # if re.search(r'/politica/', href):
-                    article_links.append(href)
+
+                items = soup.find_all('h3', class_='box-queue__subhead')
+
+                for item in items:
+                    links = item.find_all('a')  # 找到分页中的a链接
+                    for link in links:
+                        article_links.append(link['href'])  # 将链接直接添加到列表中
             else:
                 print(f"Failed to fetch data from {url_pattern}")
         except requests.Timeout:
@@ -132,6 +130,7 @@ def getHtmlContent(Urls):
         categoryNumber = category
         article_links = get_article_links(
             url, start_page, end_page, payload, categoryNumber)
+        print(article_links)
         for link in article_links:
 
             htmlContent = get_list_page(link)
