@@ -6,24 +6,25 @@ from datetime import datetime
 import spinner
 import requests
 import re
-from urls import Urls,categoryNumber,category_number,payload
+from urls import urls, categoryNumber, category_number, payload
 # 获取文章链接列表,网络请求超时处理
 
 
-def get_article_links(url_pattern, start_page,end_page,payload,categoryNumber):
+def get_article_links(url_pattern, start_page, end_page, payload, categoryNumber):
     article_links = []
     payload["category"] = categoryNumber
     for i in range(start_page, end_page + 1):
         payload["paged"] = i
-        print(payload)
+
         try:
-            response = requests.post(url_pattern,data=payload, timeout=30)
+            response = requests.post(url_pattern, data=payload, timeout=30)
             if response.ok and 'text/html' in response.headers.get('content-type', ''):
                 soup = BeautifulSoup(response.content, 'html.parser')
+                print(soup)
                 links = soup.find_all('a', class_='box-queue__data')
                 # links = soup.select('a[href*="/noticia/"]')
                 for link in links:
-                    href= link['href']
+                    href = link['href']
                     # 只采集文本类的新闻链接politica
                     # if re.search(r'/noticia/', href):
                     # if re.search(r'/politica/', href):
@@ -65,11 +66,12 @@ def getDate():
     return formatted_date
 
 
-def parseContentToExcel(htmlContent, category,category_number):
+def parseContentToExcel(htmlContent, category, category_number):
     # 使用BeautifulSoup解析HTML
     soup = BeautifulSoup(htmlContent, "html.parser")
     # 提取标题
-    title = soup.find("h1", class_="inner-page-section__title title-1").text.strip()
+    title = soup.find(
+        "h1", class_="inner-page-section__title title-1").text.strip()
 
     new_title = spinner.transform_text(title, False)
     # 标题相似度
@@ -121,17 +123,20 @@ def parseContentToExcel(htmlContent, category,category_number):
 start_page = 1
 end_page = 5  # 设置结束页码
 
+
 def getHtmlContent(Urls):
     # 遍历所有的新闻种类
     for category, url in Urls.items():
 
         # 只有五条
-        categoryNumber=category
-        article_links = get_article_links(url, start_page,end_page,payload,categoryNumber)
+        categoryNumber = category
+        article_links = get_article_links(
+            url, start_page, end_page, payload, categoryNumber)
         for link in article_links:
 
             htmlContent = get_list_page(link)
             if htmlContent is not None:
-                parseContentToExcel(htmlContent, categoryNumber,category_number)
+                parseContentToExcel(
+                    htmlContent, categoryNumber, category_number)
             else:
                 continue
