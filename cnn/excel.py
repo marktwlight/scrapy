@@ -31,8 +31,6 @@ def parseContentToExcel(title, article):
         # 创建DataFrame
         data = pd.DataFrame(
             {'文章标题（不能重复）': [new_title], '文章内容': [new_article_body]})
-    #     data.dropna(axis=0, inplace=True)
-
         if not os.path.exists(absolute_path):
             data.to_excel(absolute_path, index=False,
                           sheet_name='alizhizhuchi')
