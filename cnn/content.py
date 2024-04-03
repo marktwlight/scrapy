@@ -10,8 +10,6 @@ page.change_mode('s',go=False)
 def getContent(article_links):
     for link in article_links:
         page.get(link)
-        # title
-        # article
         title = page.ele('.post__title').text
         articleContainer = page.ele('.post__content')
         paragraphs = articleContainer.children('tag:p')
