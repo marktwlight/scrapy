@@ -4,7 +4,7 @@ from excel import parseContentToExcel
 
 
 page = WebPage()
-page.change_mode('s')
+page.change_mode('s',go=False)
 
 
 def getContent(article_links):

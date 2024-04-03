@@ -7,7 +7,7 @@ from nltk.corpus import stopwords
 import random
 # 下载葡萄牙语的语言包
 # download('own')
-# download('stopwords')
+download('stopwords')
 
 
 def get_primary_synonym(word):
