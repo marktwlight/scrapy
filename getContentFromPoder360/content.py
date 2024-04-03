@@ -93,19 +93,7 @@ def check_excel_size(filepath):
 
 index=1
 def parseContentToExcel(htmlContent, categoryNumber, category_number):
-     # 获取当前文件的绝对路径
-    current_file_path = os.path.abspath(__file__)
 
-    # 获取当前文件所在的文件夹路径
-    current_folder = os.path.dirname(current_file_path)
-
-    # filename = getDate() + " " + category_number.get(categoryNumber)+'.xlsx'
-    filename = getDate() + " " + 'newsFrompoder360'+ str(index) +'.xlsx'
-
-    absolute_path = os.path.join(current_folder, filename)
-
-    if not check_excel_size(absolute_path):
-        filename = getDate() + " " + 'newsFrompoder360'+ '_' + (index+1) +'.xlsx'
     # 使用BeautifulSoup解析HTML
     soup = BeautifulSoup(htmlContent, "html.parser")
     #提取新闻发布时间
@@ -141,17 +129,31 @@ def parseContentToExcel(htmlContent, categoryNumber, category_number):
     print(category_number.get(categoryNumber), "标题:", new_title)
     print("\n", category_number.get(categoryNumber), "正文内容:", new_article_body)
    
+    # 获取当前文件的绝对路径
+    current_file_path = os.path.abspath(__file__)
+
+    # 获取当前文件所在的文件夹路径
+    current_folder = os.path.dirname(current_file_path)
+
+    # filename = getDate() + " " + category_number.get(categoryNumber)+'.xlsx'
+    filename = getDate() + " " + 'newsFrompoder360'+ str(index) +'.xlsx'
+
+    absolute_path = os.path.join(current_folder, filename)
+
     # 创建DataFrame
     data = pd.DataFrame(
         {'文章标题（不能重复）': [new_title], '文章内容': [new_article_body]})
 #     data.dropna(axis=0, inplace=True)
-
     if not os.path.exists(absolute_path):
+        # if not check_excel_size(absolute_path):
+        #     filename = getDate() + " " + 'newsFrompoder360'+ '_' + (index+1) +'.xlsx'
         data.to_excel(absolute_path, index=False, sheet_name='alizhizhuchi')
     else:
         with pd.ExcelFile(absolute_path) as xls:
             if 'alizhizhuchi' in xls.sheet_names:
                 with pd.ExcelWriter(absolute_path, engine='openpyxl', mode='a', if_sheet_exists='overlay') as writer:
+                    # if not check_excel_size(absolute_path):
+                    #     filename = getDate() + " " + 'newsFrompoder360'+ '_' + (index+1) +'.xlsx'
                     data.to_excel(writer, index=False, sheet_name='alizhizhuchi',
                                   startrow=writer.sheets['alizhizhuchi'].max_row, header=False)
 
