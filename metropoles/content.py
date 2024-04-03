@@ -28,7 +28,7 @@ def getLinks(website, item):
     # 等待页面跳转
     page.wait.load_start()
     # 点击5次更多按键，获取到前5页的数据
-    for i in range(2):
+    for i in range(5):
         try:
             # 尝试访问页面元素的代码块
             # 这里放置你的代码，例如访问页面元素
