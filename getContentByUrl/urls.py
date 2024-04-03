@@ -11,5 +11,10 @@ urls = {
     "FLAMENGO": "https://falkor-cda.bastian.globo.com/tenants/ge/instances/1cd46a8a-4770-4c3d-b03a-0fba919c83c4/posts/page/{}",
     "Política": 'https://falkor-cda.bastian.globo.com/tenants/oglobo/instances/00b28996-5f09-49e7-95d3-50200a92f36e/posts/page/{}',
     "Rio": 'https://falkor-cda.bastian.globo.com/tenants/oglobo/instances/a6ca64c5-a5ed-473b-96bf-91a14382ea68/posts/page/{}',
-    'Mundo': 'https://falkor-cda.bastian.globo.com/tenants/oglobo/instances/c780af2e-f101-48e6-82b4-c2fe60ed617c/posts/page/{}'
+    'Mundo': 'https://falkor-cda.bastian.globo.com/tenants/g1/instances/dd647bff-9afc-47b2-b421-3875d8cf60d8/posts/page/{}'
 }
+
+
+# https://falkor-cda.bastian.globo.com/tenants/g1/instances/dd647bff-9afc-47b2-b421-3875d8cf60d8/posts/page/4
+
+# ITAPETININGA E REGIÃO https://falkor-cda.bastian.globo.com/tenants/g1/instances/66162329-e22a-4ff4-8091-0f4c7c933510/posts/page/4
