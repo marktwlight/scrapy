@@ -2,11 +2,12 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import os
-from datetime import datetime
+from datetime import datetime,timedelta
 import spinner
 import requests
 import re
 from urls import urls, categoryNumber, category_number, payload
+from date import month_mapping
 # 获取文章链接列表,网络请求超时处理
 
 
@@ -63,10 +64,44 @@ def getDate():
 
     return formatted_date
 
+def is_yesterday(time_text):
+    # 假设time_text是ResultSet对象
+    # 选择要处理的第一个元素
+    first_time_element = time_text[0]  # 或者根据实际情况选择索引
+    # 从选定的元素中提取文本
+    time_text_str = first_time_element.text
+    # 然后使用正则表达式搜索模式
+    match = re.search(r'(\d+)\.(\w+)\.(\d+)', time_text_str)
+    if match:
+        # date_str = match.group(0)  # 提取匹配的日期字符串
+        day = match.group(1)
+        month = month_mapping.get(match.group(2))
+        year = match.group(3)
+        date_str = day+'.'+month+'.'+year
+        # time_date = datetime.strptime(date_str, '%d.%b.%Y')     # 将日期字符串转换为日期对象
+        yesterday = datetime.now() - timedelta(days=1)  # 获取昨天的日期
+        yesterday_date = yesterday.date()  # 获取昨天日期的日期部分
+        yesterday_date_str = yesterday_date.strftime('%#d.%b.%Y')
+        return date_str == yesterday_date_str  # 比较日期部分是否相等
+
+def is_excel_file_too_large(file_path, max_size_mb):
+    # 获取文件大小（以字节为单位）
+    file_size_bytes = os.path.getsize(file_path)
+    # 将字节转换为MB
+    file_size_mb = file_size_bytes / (1024 * 1024)
+    # 判断文件大小是否超过阈值
+    if file_size_mb > max_size_mb:
+        return True
+    else:
+        return False
 
 def parseContentToExcel(htmlContent, categoryNumber, category_number):
     # 使用BeautifulSoup解析HTML
     soup = BeautifulSoup(htmlContent, "html.parser")
+    #提取新闻发布时间
+    time_tags = soup.find_all("time", class_="inner-page-section__date")
+    if not is_yesterday(time_tags):
+        return
     # 提取标题
     title = soup.find("h1", class_="inner-page-section__title title-1")
     if title:
@@ -74,6 +109,7 @@ def parseContentToExcel(htmlContent, categoryNumber, category_number):
         new_title = spinner.transform_text(title)
     else:
         print("未找到符合条件的标题标签")
+        return
     # 标题相似度
     # title_rate = similiarRate.getSimilarity(title,new_title)
     # 判断相似值，

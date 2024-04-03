@@ -1,4 +1,21 @@
-from datetime import datetime
+from datetime import datetime,timedelta
+
+
+#葡萄牙语月份简写
+month_mapping = {
+    'jan': 'Jan',
+    'fev': 'Feb',
+    'mar': 'Mar',
+    'abr': 'Apr',
+    'mai': 'May',
+    'jun': 'Jun',
+    'jul': 'Jul',
+    'ago': 'Aug',
+    'set': 'Sep',
+    'out': 'Oct',
+    'nov': 'Nov',
+    'dez': 'Dec'
+}
 
 # 获取当前日期
 current_date = datetime.now()
