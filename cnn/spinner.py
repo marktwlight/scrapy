@@ -29,8 +29,6 @@ def preprocess_text(text):
     processed_sentences = []
 
     for sentence in sentences:
-        if "whatsapp" in sentence.lower():
-            continue  # 如果句子中包含"whatsapp"，则跳过这句话
         words = word_tokenize(sentence, language='portuguese')  # 分词
         new_words = []
         for word in words:
