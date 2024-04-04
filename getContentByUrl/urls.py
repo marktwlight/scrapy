@@ -13,8 +13,3 @@ urls = {
     "Rio": 'https://falkor-cda.bastian.globo.com/tenants/oglobo/instances/a6ca64c5-a5ed-473b-96bf-91a14382ea68/posts/page/{}',
     'Mundo': 'https://falkor-cda.bastian.globo.com/tenants/g1/instances/dd647bff-9afc-47b2-b421-3875d8cf60d8/posts/page/{}'
 }
-
-
-# https://falkor-cda.bastian.globo.com/tenants/g1/instances/dd647bff-9afc-47b2-b421-3875d8cf60d8/posts/page/4
-
-# ITAPETININGA E REGIÃO https://falkor-cda.bastian.globo.com/tenants/g1/instances/66162329-e22a-4ff4-8091-0f4c7c933510/posts/page/4

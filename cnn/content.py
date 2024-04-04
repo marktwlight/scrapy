@@ -32,6 +32,7 @@ def getLinks(website, item):
         try:
             # 尝试访问页面元素的代码块
             # 这里放置你的代码，例如访问页面元素
+            page.wait.ele_displayed('.block-list-get-more-btn')
             page.ele('.block-list-get-more-btn').click()
         except ElementLostError as e:
             print("页面元素失效：", e)
@@ -49,7 +50,7 @@ def getContent():
     for category, item in new_category.items():
         links = getLinks(website, item)
         article_links.extend(links)
-
+    print(len(article_links))
     # 关闭浏览器
     page.quit()
     page.change_mode('s')
