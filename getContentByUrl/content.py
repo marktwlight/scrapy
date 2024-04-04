@@ -6,6 +6,7 @@ from datetime import datetime
 import spinner
 import requests
 import re
+import add_content
 # 获取文章链接列表,网络请求超时处理
 
 
@@ -89,31 +90,7 @@ def parseContentToExcel(htmlContent, category):
     print("\n", category, "正文内容:", new_article_body)
     #  一两句话的新闻太短，不要
     if len(new_article_body.split('.')) > 2:
-        # 获取当前文件的绝对路径
-        current_file_path = os.path.abspath(__file__)
-
-        # 获取当前文件所在的文件夹路径
-        current_folder = os.path.dirname(current_file_path)
-
-        filename = getDate()+'.xlsx'
-
-        absolute_path = os.path.join(current_folder, filename)
-
-        # 创建DataFrame
-        data = pd.DataFrame(
-            {'文章标题（不能重复）': [new_title], '文章内容': [new_article_body]})
-    #     data.dropna(axis=0, inplace=True)
-
-        if not os.path.exists(absolute_path):
-            data.to_excel(absolute_path, index=False,
-                          sheet_name='alizhizhuchi')
-        else:
-
-            with pd.ExcelFile(absolute_path) as xls:
-                if 'alizhizhuchi' in xls.sheet_names:
-                    with pd.ExcelWriter(absolute_path, engine='openpyxl', mode='a', if_sheet_exists='overlay') as writer:
-                        data.to_excel(writer, index=False, sheet_name='alizhizhuchi',
-                                      startrow=writer.sheets['alizhizhuchi'].max_row, header=False)
+        add_content.add_content(new_title, new_article_body)
 
 
 start_page = 1
