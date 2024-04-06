@@ -11,5 +11,5 @@ urls = urls.urls
 # # 每天早上执行任务
 # scheduler.add_job(content.getHtmlContent, 'interval', hour=16,minute=30, args=[urls])
 
-scheduler.add_job(content.getHtmlContent, 'cron',hour=6, minute=1, args=[urls])
+scheduler.add_job(content.getHtmlContent, 'cron',hour=8, minute=1, args=[urls])
 scheduler.start()
