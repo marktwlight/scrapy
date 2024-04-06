@@ -1,12 +1,12 @@
 
 from DrissionPage import WebPage
 from DrissionPage.errors import *
-from excel import parseContentToExcel
+from add_content import transform_content
 # 创建对象
 
 
-website = 'https://www.noticiasaominuto.com/'
-categorys = ['politica','economia','desporto','fama','pais','mundo','tech','cultura','lifestyle']
+website = 'https://www.poder360.com.br/'
+categorys = ['governo','anuncios-do-governo','congresso','economia','justica','infraestrutura','poderdata','infograficos','eleicoes','internacional','tecnologia','midia','pesquisas','nieman']
 
 # 获取需要的栏目链接
 page = WebPage()
@@ -18,22 +18,23 @@ def getLinks(website):
     
     for category in categorys:
         # 访问网页
-        page.get(website + category)
+        page.get(website + category + '/')
         # 等待页面跳转
         page.wait.doc_loaded()
+        page.ele('.load-more-posts-category-special button-1').click()
         try:
             # 尝试访问页面元素的代码块
             # 这里放置你的代码，例如访问页面元素
-            links = page.eles('@class=article-thumb-text')
+            links = page.eles('@class=box-queue__data')
             for link in links:
                 link = link.ele('tag:a')
                 print(link.link)
                 article_links.append(link.link)
-        except ElementLostError:
-            print("页面元素失效：")
-            continue
-        except ElementNotFoundError:
-            print("未找到匹配的a标签")
+        except ElementLostError as e:
+            print("页面元素失效：", e)
+            continue 
+        except ElementNotFoundError as e:
+            print("未找到元素错误：", e)
             continue
         print(category+':'+str(len(article_links)))
     return article_links
@@ -49,8 +50,13 @@ def getContent():
     for link in article_links:
         print(link)
         page.get(link)
-        title = page.ele('.news-headline article-title').text
-        articleContainer = page.ele('.news-main-text content')
+        #ElementNotFoundError:
+        try:
+            title = page.ele('.inner-page-section__title title-1').text
+        except ElementNotFoundError as e:
+            print("未找到元素错误：", e)
+            continue
+        articleContainer = page.ele('.inner-page-section__text')
         paragraphs = articleContainer.children('tag:p')
         if paragraphs is None:
             print("未找到内容")
@@ -58,5 +64,5 @@ def getContent():
         artilce = ''
         for paragraph in paragraphs:
             artilce += paragraph.text
-        parseContentToExcel(title, artilce)
+        transform_content(title, artilce)
 
