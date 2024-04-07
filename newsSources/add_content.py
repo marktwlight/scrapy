@@ -34,7 +34,7 @@ def transform_content(title, article):
         print("标题:", new_title)
         print("\n正文内容:", new_article_body)
         try:
-            add_content.add_content(new_title, new_article_body)
+            add_content(new_title, new_article_body)
         except Exception as e:
             print("上传内容发生异常：",e)
             return

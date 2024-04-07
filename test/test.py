@@ -1,9 +1,12 @@
-import os
+from googletrans import Translator
 
-# 获取当前文件的绝对路径
-current_file_path = os.path.abspath(__file__)
+def translate_text(text, target_language='pt'):
+    translator = Translator()
+    translation = translator.translate(text, dest=target_language)
+    return translation.text
 
-# 获取当前文件所在的文件夹路径
-current_folder = os.path.dirname(current_file_path)
-
-print("当前文件所在文件夹路径:", current_folder)
+# Exemplo de uso
+english_text = "Hello, how are you?"
+portuguese_translation = translate_text(english_text)
+print("English:", english_text)
+print("Portuguese:", portuguese_translation)

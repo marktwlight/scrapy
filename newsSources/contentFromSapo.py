@@ -17,7 +17,7 @@ page = WebPage()
 def getLinks(website):
 
     article_links = []
-    
+    tag = 0
     for category in categorys:
         # 访问网页
         page.get(website + category)
@@ -30,8 +30,11 @@ def getLinks(website):
             links = page.eles('tag:article')
             for link in links:
                 link = link.ele('tag:a')
+                if tag >= 40:
+                    return article_links
                 print(link.link)
                 article_links.append(link.link)
+                tag+=1
         except ElementLostError as e:
             print("页面元素失效：", e)
             continue 

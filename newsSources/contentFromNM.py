@@ -15,7 +15,7 @@ page = WebPage()
 def getLinks(website):
 
     article_links = []
-    
+    tag = 0
     for category in categorys:
         # 访问网页
         page.get(website + category)
@@ -26,9 +26,12 @@ def getLinks(website):
             # 这里放置你的代码，例如访问页面元素
             links = page.eles('@class=article-thumb-text')
             for link in links:
-                link = link.ele('tag:a')
+                link = link.ele('tag:a')             
+                if tag >= 60:
+                    return article_links
                 print(link.link)
                 article_links.append(link.link)
+                tag+=1
         except ElementLostError:
             print("页面元素失效：")
             continue

@@ -21,7 +21,7 @@ def getLinks(website):
         page.get(website + category + '/')
         # 等待页面跳转
         page.wait.doc_loaded()
-        page.ele('.load-more-posts-category-special button-1').click()
+        # page.ele('.load-more-posts-category-special button-1').click()
         try:
             # 尝试访问页面元素的代码块
             # 这里放置你的代码，例如访问页面元素

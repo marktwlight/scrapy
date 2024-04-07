@@ -1,4 +1,4 @@
-
+import translate
 from DrissionPage import WebPage
 from DrissionPage.errors import *
 from add_content import transform_content
@@ -14,10 +14,11 @@ page = WebPage()
 def getLinks(website):
 
     article_links = []
-    
+    tag = 0
     # 点击5次更多按键，获取到前5页的数据
     for i in range(5):
         # 访问网页
+        
         page.get(website + '/' + str(i+1))
         # 等待页面跳转
         page.wait.load_start()
@@ -29,12 +30,16 @@ def getLinks(website):
                 if link.link is None:
                     print("链接为空")
                     continue
+                if tag >= 60 :
+                    return article_links
                 print(link.link)
                 article_links.append(link.link)
+                tag+=1
         except ElementLostError as e:
             print("页面元素失效：", e)
             continue 
     print(len(article_links))
+    
     return article_links
 
 
@@ -66,6 +71,10 @@ def getContent():
         artilce = ''
         for paragraph in paragraphs:
             artilce += paragraph.text
+        title = translate.translate_text(title)
+        print(title)
+        artilce = translate.translate_text(artilce)
+        print(artilce)
         transform_content(title, artilce)
 
 
