@@ -24,6 +24,6 @@ def composite_job():
 # scheduler.add_job(getContent, 'interval', seconds=1)
 
 # scheduler.add_job(getContent, 'interval', seconds=1, args=[article_links])
-scheduler.add_job(composite_job, 'cron', hour=9, minute=27)
+scheduler.add_job(composite_job, 'cron', hour=8, minute=55)
 # scheduler.add_job(getContent, 'cron', hour=11, minute=31)
 scheduler.start()

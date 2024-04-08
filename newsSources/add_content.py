@@ -22,6 +22,7 @@ def add_content(title, content):
         else:
             print("内容添加失败！")
             print("响应内容：", response.text)
+            return
     except Exception as e:
         print("请求失败：", e)
 
