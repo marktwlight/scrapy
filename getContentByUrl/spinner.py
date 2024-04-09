@@ -4,7 +4,7 @@ from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk.downloader import download
 # import nltk
 from nltk.corpus import stopwords
-import similiarRate
+
 import random
 # 下载葡萄牙语的语言包
 # download('own')

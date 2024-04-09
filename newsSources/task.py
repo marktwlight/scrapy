@@ -3,7 +3,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 import contentFromNM
 import contentFromPoder360
 import contentFromSapo
-import contentFromGoal
+# import contentFromGoal
 
 scheduler = BlockingScheduler()
 # scheduler = BackgroundScheduler()
@@ -11,10 +11,12 @@ scheduler = BlockingScheduler()
 
 print("开始执行每日任务")
 
-#所有需要执行的任务
+# 所有需要执行的任务
+
+
 def composite_job():
     # 按顺序执行多个任务函数
-    contentFromGoal.getContent()
+    # contentFromGoal.getContent()
     contentFromNM.getContent()
     contentFromPoder360.getContent()
     contentFromSapo.getContent()

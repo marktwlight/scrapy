@@ -1,5 +1,7 @@
 import requests
 import spinner
+from translateArticle import translate_text
+
 
 def add_content(title, content):
     # 请求 URL
@@ -26,16 +28,17 @@ def add_content(title, content):
     except Exception as e:
         print("请求失败：", e)
 
-def transform_content(title, article):
 
-    new_title = spinner.transform_text(title)
-    new_article_body = spinner.transform_text(article)
-    if len(new_article_body.split('.')) > 2:
+def transform_content(title, article):
+    title = translate_text(title)
+    article = translate_text(article)
+
+    if len(article.split('.')) > 2:
         # 输出标题和正文内容
-        print("标题:", new_title)
-        print("\n正文内容:", new_article_body)
+        print("标题:", title)
+        print("\n正文内容:", article)
         try:
-            add_content(new_title, new_article_body)
+            add_content(title, article)
         except Exception as e:
-            print("上传内容发生异常：",e)
+            print("上传内容发生异常：", e)
             return

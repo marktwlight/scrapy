@@ -6,7 +6,8 @@ from add_content import transform_content
 
 
 website = 'https://www.noticiasaominuto.com/'
-categorys = ['politica','economia','desporto','fama','pais','mundo','tech','cultura','lifestyle']
+categorys = ['politica', 'economia', 'desporto', 'fama',
+             'pais', 'mundo', 'tech', 'cultura', 'lifestyle']
 
 # 获取需要的栏目链接
 page = WebPage()
@@ -26,12 +27,12 @@ def getLinks(website):
             # 这里放置你的代码，例如访问页面元素
             links = page.eles('@class=article-thumb-text')
             for link in links:
-                link = link.ele('tag:a')             
+                link = link.ele('tag:a')
                 if tag >= 60:
                     return article_links
                 print(link.link)
                 article_links.append(link.link)
-                tag+=1
+                tag += 1
         except ElementLostError:
             print("页面元素失效：")
             continue
@@ -40,6 +41,7 @@ def getLinks(website):
             continue
         print(category+':'+str(len(article_links)))
     return article_links
+
 
 def getContent():
     article_links = []
@@ -55,12 +57,12 @@ def getContent():
             title = page.ele('.news-headline article-title').text
         except ElementNotFoundError as e:
             print("未找到标题：", e)
-            continue 
+            continue
         try:
             articleContainer = page.ele('.news-main-text content')
             paragraphs = articleContainer.children('tag:p')
         except ElementNotFoundError as e:
-            print("未找到内容模块：",e)
+            print("未找到内容模块：", e)
             continue
         if paragraphs is None:
             print("未找到内容")
@@ -68,5 +70,7 @@ def getContent():
         artilce = ''
         for paragraph in paragraphs:
             artilce += paragraph.text
-        transform_content(title,artilce)
+        transform_content(title, artilce)
 
+
+getContent()
