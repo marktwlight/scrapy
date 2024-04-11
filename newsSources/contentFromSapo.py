@@ -6,9 +6,9 @@ from add_content import transform_content
 
 
 website = 'https://www.sapo.pt/'
-categorys = ['noticias/ultimas','noticias/desporto','noticias/economia','noticias/entretenimento','noticias/viagens',
-             'noticias/fama','noticias/tecnologia','noticias/planeta','noticias/regioes',
-             'tag/israel','tag/ucrania','tag/habitacao']
+categorys = ['noticias/ultimas', 'noticias/desporto', 'noticias/economia', 'noticias/entretenimento', 'noticias/viagens',
+             'noticias/fama', 'noticias/tecnologia', 'noticias/planeta', 'noticias/regioes',
+             'tag/israel', 'tag/ucrania', 'tag/habitacao']
 
 # 获取需要的栏目链接
 page = WebPage()
@@ -34,10 +34,10 @@ def getLinks(website):
                     return article_links
                 print(link.link)
                 article_links.append(link.link)
-                tag+=1
+                tag += 1
         except ElementLostError as e:
             print("页面元素失效：", e)
-            continue 
+            continue
         except ElementNotFoundError as e:
             print("未找到元素错误：", e)
             continue
@@ -55,18 +55,19 @@ def getContent():
     for link in article_links:
         print(link)
         page.get(link)
-        #ElementNotFoundError:
+        # ElementNotFoundError:
         try:
             title = page.ele('tag:h1').text
         except ElementNotFoundError as e:
             print("未找到标题：", e)
             continue
         try:
-            articel_content = page.ele('.article-body-ctn')#data-activity-map=article-content
-            paragraphs =articel_content.eles('tag:p')
+            # data-activity-map=article-content
+            articel_content = page.ele('.article-body-ctn')
+            paragraphs = articel_content.eles('tag:p')
             # paragraphs = articel_content.eles('tag:p:not(:has(a))')
         except ElementNotFoundError as e:
-            print("未找到内容模块：",e)
+            print("未找到内容模块：", e)
             continue
         # for content in articel_content:
         # if paragraphs is None:
@@ -76,3 +77,6 @@ def getContent():
         for paragraph in paragraphs:
             artilce += paragraph.text
         transform_content(title, artilce)
+
+
+getContent()

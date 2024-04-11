@@ -3,10 +3,12 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import os
 from datetime import datetime
-import spinner
+
 import requests
 import re
 import add_content
+from translateArticle import translate_text
+import urls
 # 获取文章链接列表,网络请求超时处理
 
 
@@ -69,7 +71,7 @@ def parseContentToExcel(htmlContent, category):
     # 提取标题
     title = soup.find("h1", class_="content-head__title").text.strip()
 
-    new_title = spinner.transform_text(title, False)
+    new_title = translate_text(title)
     # 标题相似度
     # title_rate = similiarRate.getSimilarity(title,new_title)
     # 判断相似值，
@@ -83,7 +85,7 @@ def parseContentToExcel(htmlContent, category):
 
     # 调用伪原创方法
     # git
-    new_article_body = spinner.transform_text(article_body, True)
+    new_article_body = translate_text(article_body)
 
     # 输出标题和正文内容
     print(category, "标题:", new_title)
@@ -110,3 +112,6 @@ def getHtmlContent(urls):
                 parseContentToExcel(htmlContent, category)
             else:
                 continue
+
+
+getHtmlContent(urls.urls)

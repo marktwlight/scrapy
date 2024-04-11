@@ -41,7 +41,6 @@ def getLinks(website):
 
 
 def getContent():
-    article_links = []
     article_links = getLinks(website)
     print(len(article_links))
     # 关闭浏览器
@@ -66,3 +65,5 @@ def getContent():
             artilce += paragraph.text
         transform_content(title, artilce)
 
+
+getContent()
